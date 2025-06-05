@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Senac - Editar PalavraC</title>
+  <title>Senac - Editar Palavra</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='envio_de_palavra.css') }}">
   <link rel="shortcut icon" href="../static/images/senac.png">
 </head>
@@ -11,7 +11,7 @@
   <div class="container">
     <div class="form-box">
       <h1>Editar palavra</h1>
-      <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/senac.png') }}" alt="logo" id="logo-icon"></a>
+      <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" id="logo-icon"></a>
       <form method="POST">
         <label for="palavra">PALAVRA</label>
         <input type="text" id="palavra" placeholder="Digite aqui" name="titulo"  value="{{ palavra.titulo }}" required>

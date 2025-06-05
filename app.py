@@ -4,9 +4,9 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv() #Carregar o .env que contem as informações de login do adm e a SECRET_KEY.
 
-#App
+#Aplicação
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 DATABASE = 'admins.db'
@@ -115,8 +115,6 @@ def edit_user():
             return render_template('edit_user.html')
     return render_template('edit_user.html', usuario=usuario)
 
-
-
 #Rota excluir a conta
 @app.route('/excluir_conta')
 def excluir_conta():
@@ -157,10 +155,10 @@ def cadastrar_palavra():
         try:
             db.execute('INSERT INTO palavras (titulo, descricao, url, capa) VALUES (?, ?, ?, ?)', (titulo, descricao, url, capa))
             db.commit()
-            flash('Palavra cadastrada!!!')
+            flash('Palavra cadastrada!')
             return redirect(url_for('cadastrar_palavra'))
         except sqlite3.IntegrityError:
-            flash('Erro ao cadastrar palavra!!!')
+            flash('Erro ao cadastrar palavra!')
             return render_template('cadastrar_palavra.html')
     return render_template('cadastrar_palavra.html')
 
@@ -222,18 +220,25 @@ def logout():
     return redirect(url_for('index'))
 
 '''
+
+Apenas para fins de teste, excluir essa linha na versão final
+
 .env:
 SECRET_KEY=589086421acc03edf62ecb6c7750347ee66a76501d1c7510caa5392503391790
 ADM_NOME=adm
 ADM_EMAIL=adm@gmail.com
 ADM_SENHA=adm123
+
 '''
 
+#Inicio da aplicação
 if __name__ == '__main__':
     inicializar_banco()
+    #Verificação no banco de dados.
     with app.app_context():
         db = get_db()
         admin = db.execute('SELECT * FROM admins WHERE tier=1').fetchone()
+        #Verificar a existência de um adm e gera um caso não exista no banco de dados.
         if not admin:
             adm_nome = os.getenv("ADM_NOME")
             adm_email = os.getenv("ADM_EMAIL")
@@ -242,6 +247,7 @@ if __name__ == '__main__':
             db.execute('INSERT INTO admins (nome, email, senha, tier) VALUES (?, ?, ?, 1)', (adm_nome, adm_email, adm_senha_segura))
             db.commit()
         palavra = db.execute('SELECT * FROM palavras').fetchone()
+        #Verificar a existência de palavras e gera caso não exista.
         if not palavra:
             db.execute('INSERT INTO palavras (titulo, descricao, url, capa) VALUES (?, ?, ?, ?)', ('BEM VINDO', 'Bem-vindo é uma saudação calorosa e inclusiva, usada para expressar a alegria e o prazer pela chegada de alguém a um novo local, evento ou grupo.', 'https://www.youtube.com/embed/RfdLdQUfZAg?si=sEKxZQ0qYcLNALau', 'RfdLdQUfZAg' ))
             db.execute('INSERT INTO palavras (titulo, descricao, url, capa) VALUES (?, ?, ?, ?)', ('OBRIGADO', 'Segundo a gramática tradicional, a palavra obrigado é um adjetivo que, num contexto de agradecimento, significa que alguém se sente agradecido por alguma coisa, por algum favor que lhe tenha sido feito, sentindo-se obrigado a retribuir esse favor a quem o fez.', 'https://www.youtube.com/embed/_X2i1MXPCkA?si=OsJP8f2eIaMhRJ68', '_X2i1MXPCkA' ))
