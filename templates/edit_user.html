@@ -8,21 +8,21 @@
 </head>
 <body>
     <div class="container">
-    <div class="profile-icon">
-    <div class="icon">&#128100;</div>
-    </div>
-
-    <form class="form" method="POST">
-        <label for="nome">Nome completo:</label>
-        <input type="text" id="nome" placeholder="Digite seu nome" name="nome" value="{{ usuario['nome'] }}" required/>
-        <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Digite seu email" name="email" value="{{ usuario['email'] }}" required/>
-    <div class="buttons">
-        <a href="{{ url_for('index') }}" class="btn back"><span>&larr;</span> Voltar</a>
-        <a href="/excluir_conta" class="btn delete">Excluir Cadastro</a>
-        <button class="btn confirm" type="submit">Confirmar Alterações</button>
-    </div>
-    </form>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" id="logo">
+        <form class="form" method="POST">
+            <label for="nome">Nome completo:</label>
+            <input type="text" id="nome" placeholder="Digite seu nome" name="nome" value="{{ usuario['nome'] }}" required/>
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Digite seu email" name="email" value="{{ usuario['email'] }}" required/>
+            <div class="buttons">
+                <a href="{{ url_for('index') }}"></a><button type="submit" id="botao_voltar">
+                    <span class="icone_voltar"><img src="{{ url_for('static', filename='images/icone_voltar.png') }}" alt="icone_voltar"></span>
+                    <span class="texto_voltar">Voltar</span>
+                </button>
+                <a href="/excluir_conta" class="btn delete">Excluir Cadastro</a>
+                <button class="btn confirm" type="submit">Confirmar Alterações</button>
+            </div>
+        </form>
     </div>
 </body>
 </html>
