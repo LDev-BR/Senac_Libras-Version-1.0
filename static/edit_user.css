@@ -6,12 +6,15 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background-image: url('images/fundo.png');
+    background-size: cover;
 }
 
-.container {
-    max-width: 600px;
-    margin: 40px auto;
+.container{
+    height: 70vh;
+    width: 40vw;
+    margin-top: 8%;
+    margin-left: 29%;
     background-color: white;
     padding: 30px;
     border-radius: 12px;
@@ -19,80 +22,89 @@ body {
     text-align: center;
 }
 
-.profile-icon {
-    background-color: #ddd;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile-icon .icon {
+.profile-icon .icon{
     font-size: 60px;
     color: #333;
 }
 
-.form {
-    text-align: left;
+#logo{
+    margin-top: 1vh;
+    width: auto;
+    height: 20vh;
 }
 
-label {
+.form{
+    text-align: left;
+    margin-top: 9%;
+}
+
+label{
     display: block;
     margin-top: 15px;
+    margin-left: 5.5%;
     font-weight: bold;
 }
 
-input {
-    width: 100%;
+input{
+    width: 90%;
     padding: 12px;
     border: none;
     border-radius: 20px;
     background-color: #ddd;
     margin-top: 5px;
+    margin-left: 5%;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.buttons {
+.buttons{
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 3vh;
+    margin-right: 4vh;
     gap: 10px;
-    flex-wrap: wrap;
+    justify-content: right;
 }
 
-.btn {
-    flex: 1;
-    padding: 12px;
+#botao_voltar{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
+}
+
+.icone_voltar img{
+    height: 2vh;
+  }
+
+.btn{
+    padding: 0px 0px;
     border: none;
     border-radius: 25px;
     color: white;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: 0.3s ease;
+    width: 30%;
 }
 
-.btn.back {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.btn.back span {
-    margin-right: 5px;
-}
-
-.btn.delete {
+.btn.delete{
     background-color: red;
+    text-decoration: none;
+    padding-left: 2.1vw;
+    padding-top: 1.5vh;
 }
 
-.btn.confirm {
+.btn.confirm{
     background-color: #004f94;
 }
 
-.btn:hover {
+.btn:hover{
     opacity: 0.9;
 }
