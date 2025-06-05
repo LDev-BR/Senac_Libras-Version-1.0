@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='mandar_email.css') }}">
-    <link rel="shortcut icon" href="../static/images/senac.png">
+    <link rel="shortcut icon" href="../static/images/logo.png">
     <title>Redefinir Senha</title>
 </head>
 
@@ -12,7 +12,7 @@
     <main class="principal">
         <section class="container">
             <div class="banner_senac">
-                <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='senac.png') }}" alt="logo" id="logo"></a>
+                <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='logo.png') }}" alt="logo" id="logo"></a>
                 <h2>Recuperação de senha</h2>
                 <form method="POST"  class="formulario">
                     <input type="email" name="email" placeholder="Informe seu e-mail de recuperação*" required><br>
