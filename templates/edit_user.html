@@ -15,10 +15,7 @@
             <label for="email">Email:</label>
             <input type="email" id="email" placeholder="Digite seu email" name="email" value="{{ usuario['email'] }}" required/>
             <div class="buttons">
-                <a href="{{ url_for('index') }}"></a><button type="submit" id="botao_voltar">
-                    <span class="icone_voltar"><img src="{{ url_for('static', filename='images/icone_voltar.png') }}" alt="icone_voltar"></span>
-                    <span class="texto_voltar">Voltar</span>
-                </button>
+                <a href="{{ url_for('index') }}" id="botao_voltar"><span class="icone_voltar"><img src="{{ url_for('static', filename='images/icone_voltar.png') }}" alt="icone_voltar"></span><span class="texto_voltar">Voltar</span></a>
                 <a href="/excluir_conta" class="btn delete">Excluir Cadastro</a>
                 <button class="btn confirm" type="submit">Confirmar Alterações</button>
             </div>
