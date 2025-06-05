@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='glossario.css') }}">
+    <title>Senac - Dicionário de Libras</title>
+</head>
+<body>
+    
+    <header>       
+        <div class="header-content">
+            <a href="{{ url_for('index') }}"><img src="../static/images/logo.png" alt="Senac" class="logo"></a>
+            <h1>Glossário de Libras</h1>
+            <div class="search-box">
+                <input type="text" placeholder="Pesquise por...">
+                <button>🔍</button>
+            </div>
+        </div>
+        
+        <main>
+            <h2>Expressões</h2>
+            
+            <table>
+            <thead>
+                    <tr>
+                    <th>Expressões:</th>
+                    <th>Descrição:</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for palavra in palavras %}
+                <tr class="gray">
+                    <td><a href="{{ url_for('exibir_palavra', id=palavra.id) }}">{{ palavra.titulo }}</a></td>
+                    <td>{{ palavra.descricao }}</td>                
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    
+</header>
+</body>
+</html>

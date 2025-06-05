@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="shortcut icon" href="../static/images/senac.png">
+    <title>Login</title>
+</head>
+
+<body class="fundo_senac">
+    <main class="principal">
+        <section class="container">
+                
+                <div class="banner_senac">
+                    <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/senac.png') }}" alt="logo" id="logo"></a>
+                    <h2>Área do administrador</h2>
+                    <h1 id="bem_vindo">Seja bem vindo!</h1>
+                    <h1>Faça login para ter acesso à sua conta</h1><br>
+                    <form method="POST" class="formulario">
+                        <input type="email" name="email" placeholder="Informe seu e-mail*" required><br>
+                        <input type="password" name="senha" placeholder="Senha*" required><br>
+                        <a href="{{ url_for('esqueceu_senha') }}" id="esqueceu">Esqueçeu a senha?</a><br>
+                    
+                        <button type="submit">Entrar</button>
+                    </form>
+                </div>
+
+        </section>
+    </main>
+</body>
+</html>

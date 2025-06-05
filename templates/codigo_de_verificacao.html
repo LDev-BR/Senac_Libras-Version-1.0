@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='codigo_de_verificacao.css') }}"> 
+    <title>Senac - Recuperação de Senha</title>
+    <link rel="shortcut icon" href="../static/images/senac.png">
+</head>
+
+<body class="fundo_senac">
+    <main class="principal">
+        <section class="container">
+            <div class="banner_senac">
+
+                <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='senac.png') }}" alt="logo" id="logo"></a>
+                <h2>Recuperação de senha</h2>
+                
+                <form method="POST" class="formulario">
+                    <input type="text" name="codigo" placeholder="Digite seu código de verificação" required><br>
+                    <button type="submit">Enviar Código</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

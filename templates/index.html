@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+  <link rel="shortcut icon" href="../static/images/senac.png">
+  <title>Senac - Dicionário de Libras</title>
+</head>
+<body>
+  <!-- Cabeçalho com menu funcional -->
+  <header class="cabecalho">
+    {% if session.get('admin_id') %}
+      <div class="perfil-area">
+        <div class="perfil-icon" onclick="toggleMenu(event)">
+          <img src="../static/images/Icone logo.png" alt="Imagem de perfil" />
+        </div>
+        <div class="menu-opcoes" id="menuOpcoes">
+          <a href="{{ url_for('cadastrar_palavra') }}">Cadastrar expressão</a>
+          <hr />
+          <a href="{{ url_for('edit_user') }}">Meu perfil</a>
+          <hr />
+          {% if session.get('admin_tier') == 1 %}
+            <a href="{{ url_for('register') }}">Cadastrar ADM</a>
+            <hr />
+          {% endif %}
+          <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+      </div>
+    {% else %}
+      <a href="{{ url_for('login') }}" id="logar">LOGIN</a>
+    {% endif %}
+    <input type="text" placeholder="🔍 Pesquisar EXPRESSÃO..." class="busca" />
+  </header>
+  <main>
+    <section class="topo">
+      <div class="container-topo">
+        <div class="lado-esquerdo">
+          <div class="texto-topo">
+            <h1>Libras que unem<br>Inclusão que transforma</h1>
+          </div>
+          <div class="imagens-abaixo">
+            <img src="../static/images/img3.png (imagem pequena com sinal de ok).webp" alt="Garota fazendo ok" class="img-pequena">
+            <img src="../static/images/img4.png (imagem pequena com grupo de três pessoas).jpg" alt="Três pessoas com logo Senac" class="img-pequena">
+          </div>
+        </div>
+        <div class="lado-direito">
+          <img src="../static/images/img1.png (imagem grande com garota fazendo sinal).webp" alt="Garota principal" class="img-grande">
+          <img src="../static/images/img2.png (imagem média com 2 pessoas e logo Senac).webp" alt="Duas pessoas com logo Senac" class="img-grande">
+        </div>
+      </div>
+    </section>
+
+    <nav class="menu">
+      <a href="{{ url_for('glossario') }}">Glossário de Libras</a>
+      <a href="#turma">Sobre Nós</a>
+    </nav>
+    <section class="cards">
+      {% for palavra in palavras %}
+        <div class="card"><h2><a href="{{ url_for('exibir_palavra', id=palavra.id) }}" style="color: rgb(255, 148, 27); text-decoration: none;">{{ palavra.titulo }}</a></h2><img src="https://img.youtube.com/vi/{{palavra.capa}}/maxresdefault.jpg" alt="imagem" style="border: solid black;"></div>
+      {% endfor %}
+    </section>
+  </main>
+
+  <header class="logo-senac">
+    <img src="../static/images/logo.png" alt="Logo SENAC" />
+  </header>
+
+  <section class="container">
+    <div class="imagem-turma">
+      <img src="../static/images/Turma web.jpeg" alt="Turma de Programador Web 2025" />
+      <h2 class="titulo-abaixo">Turma de Programador Web 2025</h2>
+    </div>
+    <div class="texto" id="turma">
+      <h2>Turma de Programador Web 2025 cria aplicação com Libras para inclusão no SENAC</h2>
+      <p>
+        A Turma desenvolveu um sistema acessível que exibe palavras acompanhadas de vídeos em Libras (Língua Brasileira de Sinais),
+        facilitando a comunicação com pessoas surdas e mudas. O projeto busca tornar o ambiente mais acolhedor e acessível,
+        reforçando o compromisso com a inclusão digital e o respeito à diversidade.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    function toggleMenu(event) {
+      event.stopPropagation();
+      const menu = document.getElementById("menuOpcoes");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    document.addEventListener("click", function () {
+      const menu = document.getElementById("menuOpcoes");
+      menu.style.display = "none";
+    });
+  </script>
+
+</body>
+</html>

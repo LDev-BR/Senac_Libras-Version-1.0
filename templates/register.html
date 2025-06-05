@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+    <link rel="shortcut icon" href="../static/images/senac.png">
+    <title>Senac - Cadastrar</title>
+</head>
+
+<body class="fundo_senac">
+    <main class="principal">
+        <section class="container">
+                <div class="banner_senac">
+                    <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/senac.png') }}" alt="logo" id="logo"></a>
+                    <h2>Seja bem-vindo!</h2>
+                    <h2>Faça o cadastro para criar à sua conta</h2>
+                    <form method="POST" class="formulario">
+                        <input type="text" name="nome" placeholder="Nome Completo*" required><br>
+                        <input type="email" name="email" placeholder="E-mail*" required><br>
+                        <input type="password" name="senha" placeholder="Senha*" required><br>
+                        <input type="password" name="confirmar_senha" placeholder="Confirmar senha*" required>
+                        <input type="number" min="0" max="1" placeholder="0 para Moderadores e 1 para Administradores*" name="tier" required><br><br>
+                        <button type="submit">Cadastrar</button>
+                    </form>
+                </div>
+        </section>
+    </main>
+</body>
+</html>

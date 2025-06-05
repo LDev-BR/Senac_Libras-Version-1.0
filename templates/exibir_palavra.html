@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senac - Dicionário de Libras</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='exibicao_de_palavra.css') }}">
+  <link rel="shortcut icon" href="../static/images/senac.png">
+</head>
+<body>
+
+<header>
+</header>
+
+  <div class="container">
+    <div class="form-box">
+      <h1>LIBRAS</h1>
+      <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/senac.png') }}" alt="logo" id="logo-icon"></a>
+      <label for="palavra">{{ palavra.titulo }}</label>
+      <iframe width="560" height="315" src="{{ palavra.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" style="border: solid black;" allowfullscreen></iframe>
+      <h2>Descrição:</h2>
+      <div class="descricao_palavra"><p>{{ palavra.descricao }}</p></div><br>
+      <a href="{{ url_for('glossario') }}" id="retornar"><button>VOLTAR</button></a>
+      {% if session.get('admin_id') %}
+        <a href="{{ url_for('deletar_palavra', id=palavra.id) }}" ><button id="deletar">DELETAR</button></a>
+        <a href="{{ url_for('edit_palavra', id=palavra.id) }}" ><button>EDITAR</button></a>
+      {% endif %}
+    </div>
+  </div>
+
+</body>
+</html>

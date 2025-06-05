@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senac - Editar PalavraC</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='envio_de_palavra.css') }}">
+  <link rel="shortcut icon" href="../static/images/senac.png">
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h1>Editar palavra</h1>
+      <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='images/senac.png') }}" alt="logo" id="logo-icon"></a>
+      <form method="POST">
+        <label for="palavra">PALAVRA</label>
+        <input type="text" id="palavra" placeholder="Digite aqui" name="titulo"  value="{{ palavra.titulo }}" required>
+        <label for="descricao">DEFINIÇÃO</label>
+        <textarea id="descricao" placeholder="Digite aqui" name="descricao" required>{{ palavra.descricao }}</textarea>
+        <label for="url">URL DO VÍDEO</label>
+        <input type="text" id="url" placeholder="Digite aqui" name="url" value="{{ palavra.url }}" required>
+        {% if palavra.capa %}
+          <label for="capa">CARD DO VÍDEO</label>
+          <input type="text" id="capa" placeholder="Digite o id do video caso deseje que um card seja criado na home..." value="{{ palavra.capa }}" name="capa">
+        {% else %}
+          <label for="capa">CARD DO VÍDEO</label>
+          <input type="text" id="capa" placeholder="Digite o id do video caso deseje que um card seja criado na home..." name="capa">
+        {% endif %}
+        <button type="submit">ENVIAR</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

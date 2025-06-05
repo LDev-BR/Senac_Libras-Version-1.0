@@ -1,0 +1,71 @@
+*{  
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body, html{
+  height: 100vh;
+  background: url('images/fundo.png') no-repeat center fixed;
+  background-size: cover;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+#logo-icon{
+  width: auto;
+  height: 10vh;
+  margin: -20px 0 50px auto;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+}
+
+.form-box {
+    background-color: white;
+    border-radius: 8px;
+    padding: 80px 80px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    width: 50%;
+    position: relative;
+    border-top: 50px solid #f57c00;
+}
+
+.form-box h1{
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: rgb(238, 238, 238);
+  }
+  
+label{
+    display: block;
+    font-weight: bold;
+    font-size: 30px;
+  }
+
+button {
+  width: 12%;
+  background-color: #ffffff;
+  color: black;
+  padding: 10px;
+  border: solid black 1px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+button:hover {
+    background-color: #f57c00;
+    color: #ffffff;
+}
+
+#deletar:hover {
+  background-color: red;
+  color: #f4f4f4;
+}

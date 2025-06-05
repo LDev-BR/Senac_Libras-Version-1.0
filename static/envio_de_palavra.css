@@ -1,0 +1,92 @@
+*{  
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body, html{
+  height: 100vh;
+  background: url('images/fundo.png') no-repeat center fixed;
+  background-size: cover;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  width: 100%;
+}
+
+#perfil-icon{
+  width: auto;
+  height: 8vh;
+  padding-left: 10px;
+}
+
+#logo-icon{
+  width: auto;
+  height: 10vh;
+  margin: -20px 0 50px auto;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 95vh;
+}
+
+.form-box {
+  background-color: white;
+  border-radius: 8px;
+  padding: 80px 80px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 35%;
+  position: relative;
+  border-top: 50px solid #f57c00;
+}
+
+.form-box h1{
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: rgb(238, 238, 238);
+}
+
+form label{
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: bold;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #868686;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  resize: none;
+}
+
+form button {
+  width: 100%;
+  background-color: #0056b3;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #004494;
+}

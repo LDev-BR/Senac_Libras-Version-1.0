@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='digitar_senha.css') }}"> 
+    <link rel="shortcut icon" href="../static/images/senac.png">
+    <title>Senac - Redefinir Senha</title>
+</head>
+
+<body class="fundo_senac">
+    <main class="principal">
+        <section class="container">
+            <div class="banner_senac">
+                <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='senac.png') }}" alt="logo" id="logo"></a>
+                <h2>Recuperação de senha</h2>
+
+                <form method="POST" class="formulario">
+                    <input type="text" name="senha" placeholder="Informe sua nova senha*" required><br>
+                    <input type="text" name="senha" placeholder="Confirme sua nova senha*" required><br>
+                </form>
+
+                <button type="submit" id="voltar">Ir para o login</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pop-up -->
+    <div id="popup">
+        <p>Senha redefinida com sucesso!</p>
+    </div>
+
+    <script>
+        document.getElementById("voltar").addEventListener("click", function(event) {
+            event.preventDefault(); 
+            const popup = document.getElementById("popup");
+            popup.style.display = "block";
+
+            setTimeout(function() {
+                window.location.href = "{{ url_for('login') }}";
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
