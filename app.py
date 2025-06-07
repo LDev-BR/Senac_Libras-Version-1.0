@@ -4,12 +4,37 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
-load_dotenv() #Carregar o .env que contem as informações de login do adm e a SECRET_KEY.
+import random
+import smtplib # enviar email
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from contextlib import contextmanager
+from datetime import datetime,timedelta
+import sys
+
 
 #Aplicação
-app = Flask(__name__)
+
+if getattr(sys,'frozen',False):
+    baseDir = sys._MEIPASS
+    currentDir = os.path.dirname(sys.executable)
+else:
+    baseDir = os.path.abspath('.')
+    currentDir = baseDir
+
+#Carregar o .env que contem as informações de login do adm e a SECRET_KEY.
+dotenv_path = os.path.join(baseDir,'.env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
+
+app = Flask(__name__,
+            template_folder=os.path.join(baseDir,"templates"),
+            static_folder=os.path.join(baseDir,"static"))
+
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
-DATABASE = 'admins.db'
+
+# Caminho do banco de dados
+DATABASE = os.path.join(baseDir,'admins.db')
 
 #Abrir e fechar o banco de dados
 def get_db():
@@ -33,6 +58,8 @@ def inicializar_banco():
                 nome TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL,
                 senha TEXT NOT NULL,
+                rec_code INTEGER,
+                expira DATETIME,
                 tier INTEGER DEFAULT 0
             );
         ''')
@@ -47,6 +74,58 @@ def inicializar_banco():
             );
         ''')
         db.commit()
+
+# Recuperação de senha
+
+#Gerar código
+
+def codigo_rec(email):
+    codigo = random.randint(10000,99999)
+    agora = datetime.now()
+    expirou = agora + timedelta(minutes=5)
+    db = get_db()
+    emailExists = db.execute('SELECT id FROM admins WHERE email=?',(email,))
+    if emailExists:
+        db.execute('UPDATE admins SET rec_code=?,expira=? WHERE email=?',(codigo,expirou,email))
+        db.commit()
+        return codigo
+    else:
+        erro = "Email não cadastrado"
+        return erro
+
+#Apagar código
+
+@app.before_request
+def apagar_codigo():
+    db = get_db()
+    agora = datetime.now()
+    db.execute('UPDATE admins SET rec_code=NULL, expira=NULL WHERE expira < ?',(agora,))
+    db.commit()
+
+#Enviar email
+
+def senha_cod(email,codigo):
+    remetente = os.getenv("REMETENTE") #adicionar remetente de email
+    remetente_senha = os.getenv("SENHA_REMETENTE") #adicionar senha do email do remetente
+    if email and codigo:
+        mensagem = MIMEMultipart()
+        mensagem['From'] = remetente
+        mensagem['To'] = email
+        mensagem['Subject'] = 'Código de recuperação de senha - Libras Senac'
+        # corpo do email
+        db = get_db()
+        data = db.execute('SELECT * FROM admins WHERE email=?',(email,)).fetchone()
+        corpo = f"Olá {data[1]}, seu código de recuperação é o seguinte: {data[4]}, use-o logo pois ele irá expirar em 5 minutos."
+        mensagem.attach(MIMEText(corpo,'plain'))
+        try:
+            servidor_email = smtplib.SMTP('smtp.gmail.com',587)
+            servidor_email.starttls()
+            servidor_email.login(remetente,remetente_senha)
+            servidor_email.sendmail(remetente,email,mensagem.as_string())
+        except Exception as e:
+            print(f"Erro: {e}")
+        finally:
+            servidor_email.quit()
 
 #Rota index
 @app.route('/')
@@ -82,6 +161,7 @@ def register():
 #Rota login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    session.clear()
     if request.method == 'POST':
         email = request.form['email']
         senha = request.form['senha']
@@ -126,12 +206,52 @@ def excluir_conta():
     session.clear()
     return redirect(url_for('index'))
 
-#Rota esqueceu a senha - fazer
-@app.route('/esqueceu_senha')
+#Rota esqueceu a senha -- enviar código
+@app.route('/esqueceu_senha',methods=['GET','POST'])
 def esqueceu_senha():
-    if 'admin_id' not in session:
-        return redirect(url_for('login'))
-    return render_template('esqueceu_senha.html')
+    if request.method == 'POST':
+        email = request.form.get('email')
+        cod = codigo_rec(email)
+        if cod > 0:
+            senha_cod(email,cod)
+            session['admin_email'] = email
+            return redirect(url_for('codigo'))
+        else:
+            return "Código não enviado por erro em servidor, email inexistente ou código não criado"
+    return render_template('mandar_email.html')
+
+#Rota esqueceu a senha -- código enviado
+@app.route('/codigo',methods=['GET','POST'])
+def codigo():
+    if request.method == 'POST':
+        cod = int(request.form.get('codigo'))
+        db = get_db()
+        cod_admin = db.execute('SELECT rec_code FROM admins WHERE email=?',(session['admin_email'],)).fetchone()
+        if cod and cod_admin and (cod == cod_admin[0]):
+            return redirect(url_for('nova_senha'))
+        else:
+            flash("Código incorreto")
+            return render_template('codigo_de_verificacao.html')
+    return render_template('codigo_de_verificacao.html')
+
+#Rota esqueceu a senha -- código correto
+@app.route('/nova_senha',methods=['GET','POST'])
+def nova_senha():
+    if request.method == 'POST':
+        senha1 = request.form['senha1']
+        senha2 = request.form['senha2']
+        print(senha1,senha2)
+        if senha1 == senha2:
+            senha_segura = generate_password_hash(senha1)
+            db = get_db()
+            db.execute('UPDATE admins SET senha = ? WHERE email=?',(senha_segura,session['admin_email']))
+            db.commit()
+            session.clear()
+            return redirect(url_for('login'))
+        else:
+            flash("Senhas diferentes")
+            return render_template('digitar_senha.html')
+    return render_template('digitar_senha.html')
 
 #Fim das funções do usuário
 
