@@ -78,6 +78,7 @@ h2{
     background-color: #005594;
     height: 5vh;
     width: 10vw;
+    margin-right: 5vw;
     line-height: 5vh;
     border: none;
     border-radius: 10px;
@@ -99,27 +100,4 @@ h2{
     color: #626262;
     font-weight: bold;
     margin-top: 10vh;
-}
-
-#voltar{
-    background-color: #005594;
-    height: 5vh;
-    width: 10vw;
-    line-height: 5vh;
-    border: none;
-    border-radius: 10px;
-    font-size: 32px;
-    color: white;
-    text-decoration: none;
-    margin-top: 13vh;
-}
-
-#voltar:hover{
-    cursor: pointer;
-    transition: all 0.2s ease-out;
-    background-color: #F88D35;
-}
-
-#voltar:active{
-    background-color: #005594;
 }
